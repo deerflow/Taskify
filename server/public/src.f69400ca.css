@@ -46,6 +46,7 @@ body {
     user-select: none;
     width: fit-content;
     border-radius: 2px;
+    transition: background-color 150ms;
 }
 
 .Task--done {

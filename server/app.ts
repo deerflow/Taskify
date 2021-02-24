@@ -1,5 +1,4 @@
 import { Express } from "express";
-import * as mongoose from 'mongoose';
 const express = require('express');
 
 //Routes

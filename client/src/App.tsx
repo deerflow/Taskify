@@ -12,23 +12,24 @@ const App = () => {
 
     React.useEffect(() => {
         getTasks()
-            .then((tasks: TaskInterface[]) => setTasksList(tasks))
+            .then((tasks: any) => {
+                const list: TaskInterface[] = tasks.map((taskDocument: any) => {
+                    const task: TaskInterface = {
+                        text: taskDocument.text,
+                        date: taskDocument.date,
+                        done: taskDocument.done,
+                        id: taskDocument._id
+                    }
+                    return task;
+                });
+                setTasksList(list);
+            })
             .catch((e: Error) => console.error(e));
     }, [])
 
     const getTasks: Function = async () => {
         const res = await fetch('/api/tasks');
-        const json = await res.json();
-        return json.map((taskDocument: any) => {
-            const task: TaskInterface = {
-                text: taskDocument.text,
-                date: taskDocument.date,
-                done: taskDocument.done,
-                id: currentId
-            }
-            setCurrentId(currentId + 1);
-            return task;
-        }) as TaskInterface[];
+        return await res.json();
     }
 
     const addTask = (text: string) => {

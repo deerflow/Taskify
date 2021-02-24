@@ -30065,7 +30065,16 @@ var App = function App() {
 
   React.useEffect(function () {
     getTasks().then(function (tasks) {
-      return setTasksList(tasks);
+      var list = tasks.map(function (taskDocument) {
+        var task = {
+          text: taskDocument.text,
+          date: taskDocument.date,
+          done: taskDocument.done,
+          id: taskDocument._id
+        };
+        return task;
+      });
+      setTasksList(list);
     }).catch(function (e) {
       return console.error(e);
     });
@@ -30073,7 +30082,7 @@ var App = function App() {
 
   var getTasks = function getTasks() {
     return __awaiter(void 0, void 0, void 0, function () {
-      var res, json;
+      var res;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -30088,19 +30097,9 @@ var App = function App() {
             , res.json()];
 
           case 2:
-            json = _a.sent();
             return [2
             /*return*/
-            , json.map(function (taskDocument) {
-              var task = {
-                text: taskDocument.text,
-                date: taskDocument.date,
-                done: taskDocument.done,
-                id: currentId
-              };
-              setCurrentId(currentId + 1);
-              return task;
-            })];
+            , _a.sent()];
         }
       });
     });
@@ -30343,7 +30342,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43429" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45963" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
